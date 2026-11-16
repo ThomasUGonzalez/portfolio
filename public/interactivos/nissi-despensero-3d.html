@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Despensero 3D · Nissi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1114; --panel: #161A1F; --line: #262B32; --text: #ECEFF2; --muted: #8B939C;
+    --cian: #1FD3E6; --naranja: #F39A2B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .app { display: flex; height: 100vh; }
+  .stage { position: relative; flex: 1; min-width: 0; background: radial-gradient(ellipse at 50% 35%, #1B2229 0%, var(--bg) 70%); }
+  canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+  .hint { position: absolute; left: 16px; bottom: 14px; font: 500 12px 'JetBrains Mono', monospace; color: var(--muted); }
+  .badge { position: absolute; left: 16px; top: 14px; font: 500 12px 'JetBrains Mono', monospace; color: var(--muted); letter-spacing: .06em; }
+  .badge b { color: var(--cian); font-weight: 500; }
+  aside { width: 400px; background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; padding: 26px 26px 40px; }
+  .brand { font: 500 12px 'JetBrains Mono', monospace; letter-spacing: .14em; color: var(--muted); }
+  .brand b { color: var(--cian); font-weight: 500; }
+  h1 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 52px; line-height: .95; margin: 10px 0 6px; letter-spacing: .01em; text-transform: uppercase; }
+  h1 span { color: var(--cian); }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+  .count { display: flex; align-items: baseline; gap: 12px; margin: 8px 0 4px; }
+  .count .n { font-family: 'Anton', sans-serif; font-size: 84px; line-height: 1; }
+  .count .t { color: var(--muted); font-size: 14px; }
+  .bar { display: flex; gap: 4px; margin: 6px 0 20px; }
+  .bar i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); transition: background .3s; }
+  .bar i.on { background: var(--cian); }
+  .row { display: flex; justify-content: space-between; font: 500 11px 'JetBrains Mono', monospace; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  input[type=range] { width: 100%; margin: 10px 0 18px; accent-color: var(--cian); height: 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  button { font: 600 13px 'Plus Jakarta Sans', sans-serif; color: var(--text); background: #1E242B; border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+  button:hover { border-color: var(--cian); }
+  button.on { background: var(--cian); color: #071315; border-color: var(--cian); }
+  h2 { font: 500 12px 'JetBrains Mono', monospace; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin: 26px 0 10px; }
+  .list { display: flex; flex-direction: column; gap: 6px; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line); cursor: pointer; transition: border-color .2s, background .2s; }
+  .item:hover, .item.on { border-color: var(--cian); background: #1A2026; }
+  .sw { width: 14px; height: 14px; border-radius: 4px; background: #F1EFEA; flex: none; }
+  .sw.metal { background: linear-gradient(135deg, #E3E6EA, #8D939A); }
+  .item .name { flex: 1; font-size: 14px; }
+  .item .q { font: 500 12px 'JetBrains Mono', monospace; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat { border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .stat .v { font-family: 'Anton', sans-serif; font-size: 30px; color: var(--cian); }
+  .stat .l { font-size: 12px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td, th { text-align: left; padding: 8px 4px; border-bottom: 1px solid var(--line); }
+  th { font: 500 11px 'JetBrains Mono', monospace; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  td.m { font-family: 'JetBrains Mono', monospace; font-size: 12px; white-space: nowrap; }
+  td.c { text-align: right; color: var(--naranja); font-weight: 800; }
+  .note { margin-top: 18px; font-size: 12px; color: var(--muted); line-height: 1.5; border-left: 2px solid var(--naranja); padding-left: 10px; }
+  @media (max-width: 860px) {
+    .app { flex-direction: column; height: auto; }
+    .stage { height: 62vh; flex: none; }
+    aside { width: 100%; border-left: 0; border-top: 1px solid var(--line); padding: 22px 16px 36px; }
+    h1 { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="stage">
+    <canvas id="c"></canvas>
+    <div class="badge"><b>●</b> FIG. 1 · DESPENSERO · <span id="estado">ARMADO</span></div>
+    <div class="hint">Arrastrá para girar · rueda o pellizco para acercar</div>
+  </div>
+  <aside>
+    <div class="brand"><b>NISSI</b> AMOBLAMIENTOS · FABRICANTES</div>
+    <h1>Despen<span>sero</span></h1>
+    <div class="sub">2,00 × 0,60 × 0,50 m · melamina blanca 18 mm · 4 puertas internas</div>
+
+    <div class="count"><div class="n" id="n">0</div><div class="t">de <span id="ntot">0</span> piezas<br>separadas</div></div>
+    <div class="bar" id="bar"></div>
+
+    <div class="row"><span>Armado</span><span>Desarmado</span></div>
+    <input type="range" id="slider" min="0" max="100" value="0" aria-label="Armado o desarmado">
+    <div class="btns">
+      <button id="bPuertas">Abrir puertas</button>
+      <button id="bAnim">Desarmar y armar</button>
+      <button id="bGirar" class="on">Girar</button>
+    </div>
+
+    <h2>Piezas</h2>
+    <div class="list" id="list"></div>
+
+    <h2>Herrajes y materiales</h2>
+    <div class="stats" id="stats"></div>
+
+    <h2>Despiece</h2>
+    <table><thead><tr><th>Pieza</th><th>Medidas (mm)</th><th style="text-align:right">Cant.</th></tr></thead><tbody id="desp"></tbody></table>
+    <div class="note">Modelo de ejemplo: la distribución interna (zócalo, altura del divisor, estantes) es una propuesta y se ajusta a la fabricación real.</div>
+  </aside>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+// mueble3d.js — Modelo paramétrico de muebles (mm) + constructor three.js compartido
+// Lo usan la página interactiva y el video (Remotion). Ejes: x ancho, y alto (piso = 0), z profundidad (frente = +).
+
+const DESPENSERO_DEFAULT = {
+  nombre: 'Despensero', W: 600, H: 2000, D: 500, T: 18, fondo: 3, zocalo: 80, divisor: 1100,
+  estantesArriba: 2, estantesAbajo: 1, luz: 2, luzCentral: 3,
+  tirador: {tipo: 'pomo', diametro: 38, alto: 28, largo: 160, cc: 128, color: '#F4F3EF', puntos: '#3A2F25'},
+  melamina: '#F1EFEA', canto: '#F1EFEA',
+};
+
+function despensero(params = {}) {
+  const p = {...DESPENSERO_DEFAULT, ...params, tirador: {...DESPENSERO_DEFAULT.tirador, ...(params.tirador || {})}};
+  const {W, H, D, T, zocalo, luz, luzCentral} = p;
+  const zF = D / 2, zB = -D / 2 + p.fondo, Dc = zF - zB, zc = (zF + zB) / 2;
+  const inW = W - 2 * T, xL = -W / 2 + T, xR = W / 2 - T;   // caras internas de los laterales
+  const parts = [];
+  const add = (o) => (parts.push(o), o);
+
+  // ---------- estructura ----------
+  add({id: 'lat_izq', nombre: 'Lateral izquierdo', grupo: 'Estructura', tipo: 'panel', size: [T, H, Dc], pos: [-W / 2 + T / 2, H / 2, zc], ex: [-430, 0, 0], orden: 5, cantos: [H]});
+  add({id: 'lat_der', nombre: 'Lateral derecho', grupo: 'Estructura', tipo: 'panel', size: [T, H, Dc], pos: [W / 2 - T / 2, H / 2, zc], ex: [430, 0, 0], orden: 5, cantos: [H]});
+  add({id: 'techo', nombre: 'Techo', grupo: 'Estructura', tipo: 'panel', size: [inW, T, Dc], pos: [0, H - T / 2, zc], ex: [0, 520, 0], orden: 4, cantos: [inW]});
+  const yPiso = zocalo + T / 2;
+  add({id: 'piso', nombre: 'Piso', grupo: 'Estructura', tipo: 'panel', size: [inW, T, Dc], pos: [0, yPiso, zc], ex: [0, -360, 0], orden: 4, cantos: [inW]});
+  add({id: 'zocalo', nombre: 'Zócalo', grupo: 'Estructura', tipo: 'panel', size: [inW, zocalo, T], pos: [0, zocalo / 2, zF - 30 - T / 2], ex: [0, -260, 380], orden: 4, cantos: []});
+  const dDiv = Dc - T - luz;             // estantes detrás de las puertas embutidas
+  const zDiv = zB + dDiv / 2;
+  add({id: 'divisor', nombre: 'Estante divisor (fijo)', grupo: 'Estructura', tipo: 'panel', size: [inW, T, dDiv], pos: [0, p.divisor, zDiv], ex: [0, 0, 520], orden: 4, cantos: [inW]});
+  add({id: 'fondo', nombre: 'Fondo 3 mm', grupo: 'Fondo', tipo: 'panel', size: [W, H, p.fondo], pos: [0, H / 2, -D / 2 + p.fondo / 2], ex: [0, 0, -620], orden: 3, cantos: [], color: '#ECEAE4'});
+
+  // ---------- estantes regulables + soportes ----------
+  const dEst = dDiv - 20, wEst = inW - 2, zEst = zB + dEst / 2 + 2;
+  const yDivTop = p.divisor + T / 2, yDivBot = p.divisor - T / 2, yTechoBot = H - T, yPisoTop = zocalo + T;
+  const est = [];
+  for (let i = 1; i <= p.estantesArriba; i++) est.push(yDivTop + (yTechoBot - yDivTop) * i / (p.estantesArriba + 1));
+  for (let i = 1; i <= p.estantesAbajo; i++) est.push(yPisoTop + (yDivBot - yPisoTop) * i / (p.estantesAbajo + 1));
+  // los estantes no pueden coincidir con la base de una bisagra (choca): se corren 80 mm
+  const hingeYs = [];
+  [[yDivTop, yTechoBot], [yPisoTop, yDivBot]].forEach(([y0, y1]) => {
+    const hP = y1 - y0 - 2 * luz, yc = (y0 + y1) / 2;
+    hingeYs.push(yc + hP / 2 - 100, yc - (hP / 2 - 100)); if (hP > 900) hingeYs.push(yc);
+  });
+  for (let i = 0; i < est.length; i++) if (hingeYs.some((h) => Math.abs(h - est[i]) < 50)) est[i] -= 80;
+  est.forEach((y, i) => {
+    add({id: `estante_${i + 1}`, nombre: `Estante regulable ${i + 1}`, grupo: 'Estantes', tipo: 'panel', size: [wEst, T, dEst], pos: [0, Math.round(y), zEst], ex: [0, 0, 560], orden: 2, cantos: [wEst]});
+    [[-1, zB + 50], [-1, zB + dEst - 50], [1, zB + 50], [1, zB + dEst - 50]].forEach(([s, z], k) =>
+      add({id: `soporte_${i + 1}_${k + 1}`, nombre: 'Soporte de estante', grupo: 'Herrajes', tipo: 'soporte', side: s,
+           pos: [s < 0 ? xL : xR, Math.round(y) - T / 2, z], ex: [s * 120, -40, 300], orden: 2.4}));
+  });
+
+  // ---------- puertas embutidas (bisagra cazoleta 35 codo 18) ----------
+  const wP = (inW - 2 * luz - luzCentral) / 2;
+  const huecos = [
+    {nivel: 'sup', y0: yDivTop, y1: yTechoBot},
+    {nivel: 'inf', y0: yPisoTop, y1: yDivBot},
+  ];
+  huecos.forEach(({nivel, y0, y1}) => {
+    const hP = y1 - y0 - 2 * luz, yc = (y0 + y1) / 2;
+    [-1, 1].forEach((s) => {
+      const id = `puerta_${nivel}_${s < 0 ? 'izq' : 'der'}`;
+      const xc = s * (luzCentral / 2 + wP / 2);
+      const nombre = `Puerta ${nivel === 'sup' ? 'superior' : 'inferior'} ${s < 0 ? 'izquierda' : 'derecha'}`;
+      add({id, nombre, grupo: 'Puertas', tipo: 'puerta', side: s, size: [wP, hP, T], pos: [xc, yc, zF - T / 2],
+           ex: [s * 160, nivel === 'sup' ? 140 : -60, 820], orden: 1, cantos: [wP, wP, hP, hP],
+           pivot: [s < 0 ? xc - wP / 2 : xc + wP / 2, yc, zF]});
+      // bisagras: 2 hasta 900 mm de alto, 3 si es más alta
+      const n = hP > 900 ? 3 : 2;
+      const ys = n === 2 ? [hP / 2 - 100, -(hP / 2 - 100)] : [hP / 2 - 100, 0, -(hP / 2 - 100)];
+      ys.forEach((dy, k) => {
+        const xCup = s < 0 ? xc - wP / 2 + 22.5 : xc + wP / 2 - 22.5;
+        add({id: `${id}_bisagra_${k + 1}`, nombre: 'Bisagra cazoleta 35 codo 18', grupo: 'Herrajes', tipo: 'bisagra', side: s,
+             padre: id, pos: [xCup, yc + dy, zF - T], reach: Math.abs((s < 0 ? xL : xR) - xCup), ex: [s * 120, 0, -260], orden: 0.6});
+      });
+      // tirador: vertical, junto al encuentro central (arriba: abajo; abajo: arriba)
+      const pomo = p.tirador.tipo === 'pomo';
+      const L = pomo ? 0 : p.tirador.largo, off = pomo ? 90 : 60;
+      const yt = nivel === 'sup' ? y0 + luz + off + L / 2 : y1 - luz - off - L / 2;
+      add({id: `${id}_tirador`, nombre: pomo ? 'Pomo de cerámica' : 'Tirador', grupo: 'Herrajes', tipo: 'tirador', padre: id, side: s,
+           pos: [s * (luzCentral / 2 + (pomo ? 50 : 40)), yt, zF], ex: [0, 0, 300], orden: 0});
+    });
+  });
+
+  // ---------- tornillos 3,5 x 35 (laterales -> techo, piso, divisor, zócalo) ----------
+  const tor = (y, z, tag) => [-1, 1].forEach((s) =>
+    add({id: `tornillo_${tag}_${s < 0 ? 'i' : 'd'}_${Math.round(z)}`, nombre: 'Tornillo 3,5 × 35', grupo: 'Herrajes', tipo: 'tornillo', side: s,
+         pos: [s * W / 2, y, z], ex: [s * 700, 0, 0], orden: 4.4}));
+  [zB + 40, zc, zF - 40].forEach((z) => { tor(H - T / 2, z, 'techo'); tor(yPiso, z, 'piso'); });
+  [zB + 40, zDiv, zB + dDiv - 40].forEach((z) => tor(p.divisor, z, 'div'));
+  [zocalo * 0.3, zocalo * 0.7].forEach((y) => tor(y, zF - 30 - T / 2, 'zoc'));
+
+  return {params: p, parts};
+}
+
+// ---------- resumen para despiece ----------
+function resumen(m) {
+  const paneles = m.parts.filter((x) => x.tipo === 'panel' || x.tipo === 'puerta');
+  const cnt = (t) => m.parts.filter((x) => x.tipo === t).length;
+  const cantoMm = paneles.reduce((a, x) => a + (x.cantos || []).reduce((b, c) => b + c, 0), 0);
+  const despiece = {};
+  paneles.forEach((x) => {
+    const dims = [...x.size].sort((a, b) => b - a);
+    const key = `${x.nombre.replace(/ (izquierd[oa]|derech[oa]|\d+)$/, '')}|${dims.map(Math.round).join(' × ')}`;
+    despiece[key] = (despiece[key] || 0) + 1;
+  });
+  return {
+    paneles: paneles.length, bisagras: cnt('bisagra'), tornillos: cnt('tornillo'), soportes: cnt('soporte'), tiradores: cnt('tirador'),
+    cantoM: Math.round(cantoMm / 100) / 10,
+    despiece: Object.entries(despiece).map(([k, n]) => { const [pieza, medidas] = k.split('|'); return {pieza, medidas, n}; }),
+  };
+}
+
+// ---------- constructor three.js ----------
+function construir(THREE, m) {
+  const S = 0.001;                                   // mm -> m
+  const root = new THREE.Group();
+  const mel = (c) => new THREE.MeshStandardMaterial({color: c || m.params.melamina, roughness: 0.55, metalness: 0});
+  const metal = () => new THREE.MeshStandardMaterial({color: '#B9BDC3', roughness: 0.32, metalness: 0.85});
+  const zinc = () => new THREE.MeshStandardMaterial({color: '#C7CBD0', roughness: 0.35, metalness: 0.8});
+  const lineMat = new THREE.LineBasicMaterial({color: '#7C838B', transparent: true, opacity: 0.9});
+  const items = [], byId = {}, doors = [];
+
+  const box = (size, mat, lines = true) => {
+    const g = new THREE.BoxGeometry(size[0] * S, size[1] * S, size[2] * S);
+    const mesh = new THREE.Mesh(g, mat); mesh.castShadow = true; mesh.receiveShadow = true;
+    if (lines) mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(g), lineMat.clone()));
+    return mesh;
+  };
+  const cyl = (r, h, mat, axis = 'z') => {
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r * S, r * S, h * S, 24), mat);
+    if (axis === 'z') mesh.rotation.x = Math.PI / 2; if (axis === 'x') mesh.rotation.z = Math.PI / 2;
+    mesh.castShadow = true; return mesh;
+  };
+
+  // primero paneles y puertas (padres), después accesorios
+  const ordered = [...m.parts].sort((a, b) => (a.padre ? 1 : 0) - (b.padre ? 1 : 0));
+  for (const p of ordered) {
+    let obj, holder;
+    if (p.tipo === 'panel') {
+      obj = box(p.size, mel(p.color));
+      obj.position.set(p.pos[0] * S, p.pos[1] * S, p.pos[2] * S);
+      holder = obj;
+    } else if (p.tipo === 'puerta') {
+      holder = new THREE.Group();                     // pivote de apertura en el canto de la bisagra
+      holder.position.set(p.pivot[0] * S, p.pivot[1] * S, p.pivot[2] * S);
+      obj = box(p.size, mel());
+      obj.position.set((p.pos[0] - p.pivot[0]) * S, 0, (p.pos[2] - p.pivot[2]) * S);
+      holder.add(obj);
+      doors.push({holder, side: p.side, id: p.id});
+    } else if (p.tipo === 'bisagra') {
+      holder = new THREE.Group();
+      const cup = cyl(17.5, 12, metal(), 'z'); cup.position.z = 6 * S; holder.add(cup);        // cazoleta 35 dentro de la puerta
+      const arm = box([p.reach + 6, 16, 11], metal(), false); arm.position.set(p.side * -(p.reach / 2) * S, 0, -6 * S); holder.add(arm);
+      const plate = box([4, 44, 36], metal(), false); plate.position.set(p.side * -(p.reach + 2) * S, 0, -22 * S); holder.add(plate);
+      obj = holder;
+    } else if (p.tipo === 'tornillo') {
+      holder = new THREE.Group();
+      const shank = cyl(1.75, 35, zinc(), 'x'); shank.position.x = -p.side * 17.5 * S; holder.add(shank);
+      const head = cyl(3.6, 2.6, zinc(), 'x'); head.position.x = p.side * 1.3 * S; holder.add(head);
+      obj = holder;
+    } else if (p.tipo === 'soporte') {
+      holder = new THREE.Group();
+      const pin = cyl(2.5, 12, zinc(), 'x'); pin.position.x = -p.side * 6 * S; holder.add(pin);
+      const pad = box([10, 3, 8], zinc(), false); pad.position.set(-p.side * 8 * S, 2.5 * S, 0); holder.add(pad);
+      obj = holder;
+    } else if (p.tipo === 'tirador') {
+      const t = m.params.tirador; holder = new THREE.Group();
+      const white = new THREE.MeshStandardMaterial({color: t.color, roughness: 0.4});
+      const black = new THREE.MeshStandardMaterial({color: t.puntos, roughness: 0.5});
+      if (t.tipo === 'pomo') {
+        // pomo de cerámica: cabeza abombada con relieve floral + base de bronce oscuro
+        const R = t.diametro / 2, Hh = t.alto;
+        const prof = [[0, 0], [7.5, 0], [7.5, 5], [6.5, 6], [6, 9], [8, 12], [R * 0.82, 15.5], [R, 19], [R * 0.98, 22.5],
+                      [R * 0.85, 25.5], [R * 0.55, Hh - 0.6], [0, Hh]].map(([r, y]) => new THREE.Vector2(r * S, y * S));
+        const head = new THREE.Mesh(new THREE.LatheGeometry(prof.slice(4), 48), white);
+        head.rotation.x = Math.PI / 2; head.castShadow = true; holder.add(head);
+        const bronze = new THREE.MeshStandardMaterial({color: t.puntos, roughness: 0.35, metalness: 0.75});
+        const base = new THREE.Mesh(new THREE.LatheGeometry(prof.slice(0, 6), 32), bronze);
+        base.rotation.x = Math.PI / 2; holder.add(base);
+        // relieve floral: 8 pétalos sobre la cara
+        for (let k = 0; k < 8; k++) {
+          const a = (k / 8) * Math.PI * 2;
+          const pet = new THREE.Mesh(new THREE.SphereGeometry(5 * S, 14, 10), white);
+          pet.scale.set(1, 0.55, 0.55); pet.rotation.z = a;
+          pet.position.set(Math.cos(a) * 8.5 * S, Math.sin(a) * 8.5 * S, (Hh - 2.2) * S); holder.add(pet);
+        }
+        const center = new THREE.Mesh(new THREE.SphereGeometry(3.4 * S, 12, 8), white); center.scale.z = 0.5; center.position.z = (Hh - 0.8) * S; holder.add(center);
+      } else {
+        const bar = box([12, t.largo, 9], white, false); bar.position.z = 27 * S; holder.add(bar);
+        [-1, 1].forEach((k) => {
+          const post = cyl(4.5, 22, white, 'z'); post.position.set(0, k * t.cc / 2 * S, 11 * S); holder.add(post);
+          const dot = cyl(3.2, 1.2, black, 'z'); dot.position.set(0, k * t.cc / 2 * S, 32 * S); holder.add(dot);
+        });
+      }
+      obj = holder;
+    }
+    const parent = p.padre ? byId[p.padre] : null;
+    if (parent && p.tipo !== 'panel') {
+      // posición relativa al pivote de la puerta
+      const pv = parent.part.pivot;
+      holder.position.set((p.pos[0] - pv[0]) * S, (p.pos[1] - pv[1]) * S, (p.pos[2] - pv[2]) * S);
+      parent.holder.add(holder);
+    } else if (p.tipo !== 'panel' && p.tipo !== 'puerta') {
+      holder.position.set(p.pos[0] * S, p.pos[1] * S, p.pos[2] * S);
+      root.add(holder);
+    } else {
+      root.add(holder);
+    }
+    const it = {part: p, holder, base: holder.position.clone(), ex: new THREE.Vector3(p.ex[0] * S, p.ex[1] * S, p.ex[2] * S)};
+    items.push(it); byId[p.id] = it;
+  }
+  // centrar el mueble en altura
+  root.position.y = -m.params.H / 2 * S;
+  return {root, items, byId, doors};
+}
+
+const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const clamp = (x) => Math.max(0, Math.min(1, x));
+
+/** e: 0 armado -> 1 desarmado (escalonado por "orden"); apertura: grados de las puertas; resaltar: fn(part) -> bool | null */
+function aplicar(THREE, model, {e = 0, apertura = 0, resaltar = null, reversa = false, resto = 0.18, tinte = true} = {}) {
+  const maxO = 5, span = 1.6;
+  for (const it of model.items) {
+    const o = reversa ? maxO - it.part.orden : it.part.orden;
+    const k = ease(clamp((e * (maxO + span) - o) / span));
+    it.holder.position.copy(it.base).addScaledVector(it.ex, k);
+  }
+  for (const d of model.doors) d.holder.rotation.y = (d.side < 0 ? -1 : 1) * (apertura * Math.PI / 180) * (1 - clamp(e * 3));
+  for (const it of model.items) {
+    const hl = resaltar ? resaltar(it.part) : null;
+    it.holder.traverse((o) => {
+      if (!o.material || o.isLineSegments) {
+        if (o.isLineSegments) { o.material.opacity = hl === false ? resto * 0.8 : 0.9; o.material.color.set(hl ? '#1FD3E6' : '#8E949B'); }
+        return;
+      }
+      if (o.userData.c0 === undefined) { o.userData.c0 = o.material.color.getHex(); o.material.transparent = true; }
+      o.material.opacity = hl === false ? resto : 1;
+      o.material.emissive && o.material.emissive.set(hl && tinte ? '#0E8E9B' : '#000000');
+    });
+  }
+}
+
+
+const modelo = despensero();
+const info = resumen(modelo);
+
+// ---------- escena ----------
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true, preserveDrawingBuffer: true});
+renderer.setClearColor(0x000000, 0);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.25;
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, 0.05, 40);
+camera.position.set(2.6, 1.15, 3.6);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.target.set(0, 0, 0); controls.minDistance = 1; controls.maxDistance = 9;
+controls.autoRotate = true; controls.autoRotateSpeed = 0.8;
+
+scene.add(new THREE.HemisphereLight('#ffffff', '#5a626c', 2.2));
+const key = new THREE.DirectionalLight('#ffffff', 3.0); key.position.set(2.5, 4, 3); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, {left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 12});
+scene.add(key);
+const rim = new THREE.DirectionalLight('#9fefff', 0.6); rim.position.set(-3, 2, -2); scene.add(rim);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), new THREE.ShadowMaterial({opacity: 0.35}));
+floor.rotation.x = -Math.PI / 2; floor.position.y = -1.0; floor.receiveShadow = true; scene.add(floor);
+const grid = new THREE.GridHelper(8, 32, '#24303a', '#1b232b'); grid.position.y = -0.999; scene.add(grid);
+
+const mueble = construir(THREE, modelo);
+scene.add(mueble.root);
+
+// ---------- UI ----------
+const piezasSep = modelo.parts.filter((p) => p.tipo === 'panel' || p.tipo === 'puerta');
+document.getElementById('ntot').textContent = piezasSep.length;
+const bar = document.getElementById('bar');
+piezasSep.forEach(() => bar.appendChild(document.createElement('i')));
+
+const grupos = [
+  ['Estructura', 'Laterales, techo, piso, zócalo y divisor', (p) => p.grupo === 'Estructura'],
+  ['Puertas', 'Embutidas, melamina 18 mm', (p) => p.grupo === 'Puertas'],
+  ['Estantes regulables', 'Apoyados en soportes', (p) => p.grupo === 'Estantes'],
+  ['Fondo 3 mm', 'Superpuesto atrás', (p) => p.grupo === 'Fondo'],
+  ['Bisagras cazoleta 35 · codo 18', 'Para puerta interna', (p) => p.tipo === 'bisagra', true],
+  ['Tornillos 3,5 × 35', 'Unen laterales con techo, piso, divisor y zócalo', (p) => p.tipo === 'tornillo', true],
+  ['Soportes de estante', '4 por estante', (p) => p.tipo === 'soporte', true],
+  ['Pomos de cerámica', 'Blancos con relieve, base de bronce', (p) => p.tipo === 'tirador', true],
+];
+let resalt = null, fijo = null;
+const list = document.getElementById('list');
+grupos.forEach(([nombre, desc, fn, metal]) => {
+  const n = modelo.parts.filter(fn).length;
+  const el = document.createElement('div'); el.className = 'item';
+  el.innerHTML = `<span class="sw ${metal ? 'metal' : ''}"></span><span class="name">${nombre}<br><span class="q" style="font-family:inherit">${desc}</span></span><span class="q">×${n}</span>`;
+  el.onmouseenter = () => { if (!fijo) resalt = fn; };
+  el.onmouseleave = () => { if (!fijo) resalt = null; };
+  el.onclick = () => {
+    const on = fijo !== fn; fijo = on ? fn : null; resalt = fijo;
+    list.querySelectorAll('.item').forEach((x) => x.classList.remove('on')); if (on) el.classList.add('on');
+    if (on && metal && target < 0.6) setTarget(1);
+  };
+  list.appendChild(el);
+});
+const stats = document.getElementById('stats');
+[[info.bisagras, 'bisagras cazoleta 35'], [info.tornillos, 'tornillos 3,5 × 35'], [info.soportes, 'soportes de estante'], [info.cantoM + ' m', 'de canto blanco']]
+  .forEach(([v, l]) => { const d = document.createElement('div'); d.className = 'stat'; d.innerHTML = `<div class="v">${v}</div><div class="l">${l}</div>`; stats.appendChild(d); });
+const desp = document.getElementById('desp');
+info.despiece.forEach((r) => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.pieza}</td><td class="m">${r.medidas}</td><td class="c">${r.n}</td>`; desp.appendChild(tr); });
+
+const slider = document.getElementById('slider');
+let target = 0, e = 0, ap = 0, apTarget = 0, anim = null;
+const setTarget = (v) => { target = v; slider.value = Math.round(v * 100); };
+slider.oninput = () => { anim = null; target = slider.value / 100; };
+const bP = document.getElementById('bPuertas');
+bP.onclick = () => { apTarget = apTarget ? 0 : 105; bP.classList.toggle('on', !!apTarget); bP.textContent = apTarget ? 'Cerrar puertas' : 'Abrir puertas'; if (apTarget) setTarget(0); };
+document.getElementById('bGirar').onclick = (ev) => { controls.autoRotate = !controls.autoRotate; ev.target.classList.toggle('on', controls.autoRotate); };
+document.getElementById('bAnim').onclick = () => { anim = performance.now(); apTarget = 0; bP.classList.remove('on'); bP.textContent = 'Abrir puertas'; };
+
+function resize() {
+  const r = canvas.parentElement.getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false); camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize); resize();
+
+const clock = new THREE.Clock();
+function loop(now) {
+  const dt = Math.min(0.05, clock.getDelta());
+  if (anim !== null) {   // 0-3 s desarma, 3-4 s quieto, 4-7 s arma
+    const t = (now - anim) / 1000;
+    setTarget(t < 3 ? t / 3 : t < 4 ? 1 : t < 7 ? 1 - (t - 4) / 3 : 0);
+    if (t >= 7) anim = null;
+  }
+  const ePrev = e;
+  e += (target - e) * Math.min(1, dt * 6);
+  { const f = (x) => 1 + 0.75 * x; const k = f(e) / f(ePrev);
+    if (Math.abs(k - 1) > 1e-5) camera.position.sub(controls.target).multiplyScalar(k).add(controls.target); }
+  ap += (apTarget - ap) * Math.min(1, dt * 5);
+  aplicar(THREE, mueble, {e, apertura: ap, resaltar: resalt ? (p) => resalt(p) : null});
+  // contador de piezas separadas
+  const sep = mueble.items.filter((it) => (it.part.tipo === 'panel' || it.part.tipo === 'puerta') && it.holder.position.distanceTo(it.base) > 0.03).length;
+  document.getElementById('n').textContent = sep;
+  bar.querySelectorAll('i').forEach((x, i) => x.classList.toggle('on', i < sep));
+  document.getElementById('estado').textContent = e > 0.95 ? 'DESARMADO' : e < 0.05 ? (ap > 10 ? 'PUERTAS ABIERTAS' : 'ARMADO') : 'DESARMANDO…';
+  controls.update(); renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+window.__ready = true;
+</script>
+</body>
+</html>

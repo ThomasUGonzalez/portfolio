@@ -1,0 +1,94 @@
+{
+  "id": "alquitra",
+  "orden": 2,
+  "destacado": true,
+  "titulo": {
+    "es": "ALQUITRA: gestión de stock para alquiler de trajes",
+    "en": "ALQUITRA: stock management for a suit rental shop"
+  },
+  "resumen": {
+    "es": "Sistema web con control de stock por día, reservas y reportes. Proyecto final grupal de la carrera.",
+    "en": "Web system with per-day stock control, reservations and reports. Group capstone project."
+  },
+  "problema": {
+    "es": "Un local de alquiler de trajes necesita saber qué trajes están disponibles cada día y evitar reservas superpuestas.",
+    "en": "A suit rental shop needs to know which suits are available each day and avoid overlapping reservations."
+  },
+  "rol": {
+    "es": "Equipo de 4 personas, sin roles fijos. Mi foco fue la capa de bases de datos.",
+    "en": "Team of 4 with no fixed roles. My focus was the database layer."
+  },
+  "queHice": {
+    "es": [
+      "Modelo relacional normalizado en PostgreSQL para usuarios, clientes, trajes y reservas; MongoDB para la auditoría de acciones.",
+      "Reglas de reserva: estados Pendiente, Retirado, Completado o Cancelado, validación de fechas y seña, y detección de superposición según las unidades disponibles de cada traje.",
+      "API REST en capas con Node.js y Express, autenticación JWT y rutas protegidas.",
+      "Tarea diaria automática con node-cron, tests con Jest, documentación con Swagger y bases levantadas con Docker Compose."
+    ],
+    "en": [
+      "Normalized relational model in PostgreSQL for users, clients, suits and reservations; MongoDB for action auditing.",
+      "Reservation rules: Pending, Picked up, Completed or Cancelled states, date and deposit validation, and overlap detection based on each suit's available units.",
+      "Layered REST API with Node.js and Express, JWT authentication and protected routes.",
+      "Daily automated job with node-cron, Jest tests, Swagger documentation and databases run with Docker Compose."
+    ]
+  },
+  "decision": {
+    "es": "Usé dos bases a propósito: relacional para los datos transaccionales y documental para los logs.",
+    "en": "I used two databases on purpose: relational for transactional data and document-based for logs."
+  },
+  "stack": [
+    "Angular",
+    "Node.js",
+    "Express",
+    "TypeScript",
+    "PostgreSQL",
+    "Sequelize",
+    "MongoDB",
+    "Mongoose",
+    "JWT",
+    "Jest",
+    "Swagger",
+    "Docker"
+  ],
+  "estado": {
+    "es": "Proyecto final, en pulido de detalles",
+    "en": "Capstone project, final polish"
+  },
+  "aclaracion": null,
+  "logo": "/logos/alquitra.png",
+  "portada": "/logos/alquitra.png",
+  "colorMarca": "#111111",
+  "video": "alquitra-07-recorrido-completo.mp4",
+  "clips": [
+    {
+      "archivo": "alquitra-03-registrar-alquiler.mp4",
+      "titulo": {
+        "es": "Registrar un alquiler",
+        "en": "Register a rental"
+      }
+    },
+    {
+      "archivo": "alquitra-04-consultar-disponibilidad.mp4",
+      "titulo": {
+        "es": "Consultar disponibilidad",
+        "en": "Check availability"
+      }
+    },
+    {
+      "archivo": "alquitra-06-dashboard-reportes.mp4",
+      "titulo": {
+        "es": "Dashboard y reportes",
+        "en": "Dashboard and reports"
+      }
+    }
+  ],
+  "repo": {
+    "tipo": "publico",
+    "url": "https://github.com/Romann2004/ALQUITRA",
+    "texto": {
+      "es": "Ver código en GitHub",
+      "en": "View code on GitHub"
+    }
+  },
+  "demo": null
+}

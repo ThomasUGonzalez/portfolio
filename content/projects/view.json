@@ -1,0 +1,97 @@
+{
+  "id": "view",
+  "orden": 1,
+  "destacado": true,
+  "titulo": {
+    "es": "View: asistente de WhatsApp y panel de consultas",
+    "en": "View: WhatsApp assistant and inquiry dashboard"
+  },
+  "resumen": {
+    "es": "Bot de WhatsApp sin IA, panel en tiempo real y cotizador para una empresa de diseño de interiores.",
+    "en": "AI-free WhatsApp bot, real-time dashboard and quoting sheet for an interior design company."
+  },
+  "problema": {
+    "es": "Atender las consultas por WhatsApp obligaba a estar detrás del celular las 24 horas.",
+    "en": "Handling WhatsApp inquiries meant being tied to the phone around the clock."
+  },
+  "rol": {
+    "es": "Coordiné todo el proyecto y lo desarrollé de punta a punta.",
+    "en": "I led the whole project and built it end to end."
+  },
+  "queHice": {
+    "es": [
+      "Bot de WhatsApp con respuestas fijas y formularios (WhatsApp Flows) por producto.",
+      "Panel web en tiempo real para que el dueño siga las consultas, instalable como app en el celular.",
+      "Refactoricé y estandaricé su cotizador en planilla, que tenía fórmulas rotas.",
+      "Avisos por mail, monitoreo de salud del servicio y 402 tests automáticos."
+    ],
+    "en": [
+      "WhatsApp bot with fixed replies and forms (WhatsApp Flows) per product.",
+      "Real-time web dashboard so the owner can follow inquiries, installable as a phone app.",
+      "Refactored and standardized his quoting spreadsheet, which had broken formulas.",
+      "Email notifications, service health monitoring and 402 automated tests."
+    ]
+  },
+  "decision": {
+    "es": "Primero lo hice con IA (Gemini), pero se dispersaba e inventaba respuestas. Migré a formularios para contener lo que el bot puede decir.",
+    "en": "I first built it with AI (Gemini), but it drifted and made up answers. I moved to forms to keep control over what the bot can say."
+  },
+  "stack": [
+    "Next.js",
+    "TypeScript",
+    "Vercel",
+    "Supabase",
+    "PostgreSQL",
+    "WhatsApp Cloud API",
+    "Google Apps Script",
+    "GitHub"
+  ],
+  "estado": {
+    "es": "En uso real",
+    "en": "In real use"
+  },
+  "aclaracion": null,
+  "logo": "/logos/view.png",
+  "portada": "/logos/view.png",
+  "colorMarca": "#004aad",
+  "video": "view-bot-celular.mp4",
+  "clips": [
+    {
+      "archivo": "view-bot-panel-celular.mp4",
+      "titulo": {
+        "es": "Panel de consultas en el celular",
+        "en": "Inquiry dashboard on the phone"
+      }
+    },
+    {
+      "archivo": "view-cotizador-planilla.mp4",
+      "titulo": {
+        "es": "Cotizador en planilla",
+        "en": "Quoting spreadsheet"
+      }
+    },
+    {
+      "archivo": "view-mail-y-whatsapp-web.mp4",
+      "titulo": {
+        "es": "Mail y WhatsApp Web",
+        "en": "Email and WhatsApp Web"
+      }
+    },
+    {
+      "archivo": "view-cotizador-antes.mp4",
+      "titulo": {
+        "es": "Cómo era antes",
+        "en": "How it was before"
+      }
+    }
+  ],
+  "repo": {
+    "tipo": "privado",
+    "url": null,
+    "texto": {
+      "es": "Código disponible a pedido",
+      "en": "Code available on request"
+    }
+  },
+  "demo": null
+}

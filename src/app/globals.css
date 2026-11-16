@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/* Paleta y tipografía del sitio. Cambiando estos valores cambia todo. */
+@theme {
+  --color-bg: #0a0f14;
+  --color-surface: #111922;
+  --color-surface-2: #18222d;
+  --color-line: #263443;
+  --color-ink: #e6edf3;
+  --color-muted: #a3b3c2;
+  --color-accent: #22d3ee;
+  --color-accent-ink: #04222b;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* alto del menú fijo */
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Aparecer al hacer scroll (solo si hay JavaScript: la clase .js la pone el layout). */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

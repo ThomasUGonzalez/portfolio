@@ -1,0 +1,93 @@
+{
+  "nombre": "Thomas Ulises González",
+  "nombreCorto": "Thomas González",
+  "foto": null,
+  "ubicacion": { "es": "Venado Tuerto, Santa Fe, Argentina", "en": "Venado Tuerto, Santa Fe, Argentina" },
+  "titular": {
+    "es": "Desarrollador de software · Estudiante de Ingeniería en Sistemas (UTN)",
+    "en": "Software developer · Information Systems Engineering student (UTN)"
+  },
+  "bajada": {
+    "es": "Hago software que resuelve problemas concretos de negocios reales.",
+    "en": "I build software that solves concrete problems for real businesses."
+  },
+  "sobreMi": {
+    "es": [
+      "Soy Thomas, tengo 22 años y vivo en Venado Tuerto. Estudio Ingeniería en Sistemas en la UTN y ya tengo el título de Programador Universitario.",
+      "Me gusta resolver problemas reales de negocios reales: un bot que atiende consultas para que el dueño no tenga que vivir pegado al celular, un sistema que ordena el stock de un alquiler de trajes, un modelo 3D para que un cliente vea su mueble antes de fabricarlo.",
+      "Lo mío es el desarrollo de software, pero no me encierro ahí. Me interesan también el soporte, las redes y la ciberseguridad, y me adapto rápido a lo que el equipo necesite. Aprendo haciendo y no tengo problema en arrancar por donde haga falta.",
+      "Además soy árbitro de fútbol, y eso me enseñó a decidir rápido y mantener la calma cuando hay presión."
+    ],
+    "en": [
+      "I'm Thomas, I'm 22 and I live in Venado Tuerto, Argentina. I'm studying Information Systems Engineering at UTN and already hold the University Programmer degree.",
+      "I like solving real problems for real businesses: a bot that answers inquiries so the owner doesn't have to be glued to the phone, a system that organizes stock for a suit rental shop, a 3D model so a client can see their furniture before it's built.",
+      "Software development is my main focus, but I don't box myself in. I'm also interested in IT support, networking and cybersecurity, and I adapt quickly to whatever the team needs. I learn by doing and I'm happy to start wherever I'm needed.",
+      "I'm also a football referee, which taught me to make quick decisions and stay calm under pressure."
+    ]
+  },
+  "contacto": {
+    "email": "thomasulisesgonzalez@gmail.com",
+    "github": "https://github.com/ThomasUGonzalez",
+    "linkedin": "https://www.linkedin.com/in/thomasugonzalez/",
+    "cv": "/CV-Thomas-Gonzalez.pdf"
+  },
+  "educacion": [
+    {
+      "institucion": "Universidad Tecnológica Nacional, Facultad Regional Venado Tuerto",
+      "titulo": { "es": "Ingeniería en Sistemas de Información · 4.º año en curso", "en": "Information Systems Engineering · 4th year in progress" },
+      "periodo": { "es": "2023 – actualidad", "en": "2023 – present" },
+      "detalle": {
+        "es": "Título intermedio: Programador Universitario. 24 materias aprobadas.",
+        "en": "Intermediate degree: University Programmer. 24 courses passed."
+      },
+      "promedio": "8,58"
+    },
+    {
+      "institucion": "Escuela de Educación Técnico Profesional N.º 402",
+      "titulo": { "es": "Técnico en Industrias de Procesos", "en": "Process Industries Technician" },
+      "periodo": { "es": "Egresado en 2022", "en": "Graduated 2022" },
+      "detalle": null,
+      "promedio": null
+    }
+  ],
+  "experiencia": [
+    {
+      "puesto": { "es": "Desarrollador de software (proyectos propios, académicos y freelance)", "en": "Software developer (personal, academic and freelance projects)" },
+      "lugar": "Venado Tuerto",
+      "periodo": { "es": "2025 – actualidad", "en": "2025 – present" },
+      "detalle": {
+        "es": "Sistemas que reemplazan registros manuales por procesos digitales, con su documentación técnica y manuales de usuario.",
+        "en": "Systems that replace manual records with digital processes, including technical documentation and user manuals."
+      }
+    },
+    {
+      "puesto": { "es": "Pasante, auxiliar de logística y comercio exterior", "en": "Intern, logistics and foreign trade assistant" },
+      "lugar": "Corven Motors, Venado Tuerto",
+      "periodo": { "es": "2022", "en": "2022" },
+      "detalle": {
+        "es": "Gestión de documentación logística y control de inventarios. Mejoré procesos administrativos y el flujo de información entre áreas.",
+        "en": "Managed logistics documentation and inventory control. Improved administrative processes and information flow between departments."
+      }
+    },
+    {
+      "puesto": { "es": "Árbitro de fútbol (AVA) y atención al público", "en": "Football referee (AVA) and customer service" },
+      "lugar": "Venado Tuerto",
+      "periodo": { "es": "2021 – actualidad", "en": "2021 – present" },
+      "detalle": {
+        "es": "Decisiones rápidas y manejo de conflictos bajo presión; atención al público en distintos roles operativos.",
+        "en": "Quick decision-making and conflict handling under pressure; customer-facing work in several operational roles."
+      }
+    }
+  ],
+  "skills": [
+    { "area": { "es": "Backend", "en": "Backend" }, "items": ["Node.js", "Express", "Next.js", "TypeScript", "JavaScript"] },
+    { "area": { "es": "Bases de datos", "en": "Databases" }, "items": ["PostgreSQL", "Supabase", "MongoDB", "Sequelize", "Mongoose"] },
+    { "area": { "es": "Frontend y 3D", "en": "Frontend and 3D" }, "items": ["Angular", "three.js"] },
+    { "area": { "es": "Integraciones y automatización", "en": "Integrations and automation" }, "items": ["WhatsApp Cloud API", "WhatsApp Flows", "Google Apps Script", "Vercel Workflows", "Gemini / AI SDK"] },
+    { "area": { "es": "Herramientas", "en": "Tools" }, "items": ["Git", "GitHub", "Docker", "Vercel", "Postman", "Swagger", "Jest"] }
+  ],
+  "idiomas": [
+    { "es": "Español (nativo)", "en": "Spanish (native)" },
+    { "es": "Inglés (técnico, lectura de documentación)", "en": "English (technical, reading documentation)" }
+  ]
+}

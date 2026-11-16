@@ -1,0 +1,48 @@
+{
+  "id": "nissi",
+  "orden": 3,
+  "destacado": true,
+  "titulo": { "es": "Nissi: visualización 3D interactiva de muebles a medida", "en": "Nissi: interactive 3D visualization of custom furniture" },
+  "resumen": {
+    "es": "Modelo 3D paramétrico que se desarma y se rearma, en una página interactiva y en un video.",
+    "en": "Parametric 3D model that comes apart and back together, as an interactive page and a video."
+  },
+  "problema": {
+    "es": "Mostrarle al cliente cómo queda y cómo se arma un mueble antes de fabricarlo.",
+    "en": "Showing the client how a piece of furniture looks and is assembled before it is built."
+  },
+  "rol": {
+    "es": "Lo desarrollé con asistencia de IA como herramienta de trabajo.",
+    "en": "I built it using AI assistance as a development tool."
+  },
+  "queHice": {
+    "es": [
+      "Modelo 3D paramétrico en milímetros, compartido entre la página y el video.",
+      "Página interactiva para girar, acercar y ver el mueble desarmado.",
+      "Video vertical renderizado con animación de desarme y rearmado."
+    ],
+    "en": [
+      "Parametric 3D model in millimeters, shared between the page and the video.",
+      "Interactive page to rotate, zoom and view the furniture disassembled.",
+      "Vertical rendered video with a take-apart and reassembly animation."
+    ]
+  },
+  "decision": {
+    "es": "Corrí el estante 80 mm para que no choque con la bisagra.",
+    "en": "I shifted the shelf 80 mm so it does not collide with the hinge."
+  },
+  "stack": ["three.js", "Remotion", "JavaScript", "Python"],
+  "estado": { "es": "En uso interno", "en": "Internal use" },
+  "aclaracion": {
+    "es": "Es una visualización para comunicar. La distribución interna es una propuesta y se ajusta a la fabricación real; no es un plano de taller.",
+    "en": "A visualization for communication. The internal layout is a proposal adjusted to real manufacturing; it is not a workshop drawing."
+  },
+  "logo": "/logos/nissi.png",
+  "portada": "/logos/nissi.png",
+  "colorMarca": "#20d4e8",
+  "video": "nissi-reel-web.mp4",
+  "clips": [],
+  "interactivo": { "archivo": "nissi-despensero-3d.html", "boton": { "es": "Probalo vos", "en": "Try it yourself" } },
+  "repo": { "tipo": "ninguno", "url": null, "texto": null },
+  "demo": null
+}
