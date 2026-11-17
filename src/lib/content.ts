@@ -52,6 +52,18 @@ function missing(publicPath: string, field: string): string[] {
     : [`campo "${field}": no existe el archivo public/${publicPath.replace(/^\//, "")}`];
 }
 
+/** "mi-pagina.html" -> "mi-pagina". La página vive en public/interactivos/mi-pagina/index.html */
+const slugOf = (archivo: string) => archivo.replace(/\.html$/, "");
+
+/**
+ * URL con la que se abre la página interactiva. Vercel sirve los .html con "URLs limpias"
+ * (la carpeta, sin "index.html"), mientras que el servidor de desarrollo necesita el archivo.
+ */
+const interactiveUrl = (archivo: string) =>
+  process.env.NODE_ENV === "production"
+    ? `/interactivos/${slugOf(archivo)}/`
+    : `/interactivos/${slugOf(archivo)}/index.html`;
+
 function media(file: string): Media {
   const size = readMp4Size(path.join(PUBLIC, "videos", file));
   return { src: `/videos/${file}`, ...size, vertical: size.height > size.width };
@@ -73,7 +85,9 @@ function loadProjects(): Project[] {
       ...missing(data.portada, "portada"),
       ...missing(`videos/${data.video}`, "video"),
       ...data.clips.flatMap((c, i) => missing(`videos/${c.archivo}`, `clips.${i}.archivo`)),
-      ...(data.interactivo ? missing(`interactivos/${data.interactivo.archivo}`, "interactivo.archivo") : []),
+      ...(data.interactivo
+        ? missing(`interactivos/${slugOf(data.interactivo.archivo)}/index.html`, "interactivo.archivo")
+        : []),
     ];
     if (problems.length) fail(rel, problems);
 
@@ -81,7 +95,7 @@ function loadProjects(): Project[] {
       ...data,
       videoMedia: media(data.video),
       clipsMedia: data.clips.map((c) => ({ ...media(c.archivo), titulo: c.titulo })),
-      interactivoSrc: data.interactivo ? `/interactivos/${data.interactivo.archivo}` : null,
+      interactivoSrc: data.interactivo ? interactiveUrl(data.interactivo.archivo) : null,
     };
   });
 
