@@ -2,6 +2,10 @@
 
 Sitio estático (Next.js + TypeScript + Tailwind) que se arma solo a partir de los JSON de `content/`.
 
+**Sitio publicado:** https://portfolio-tan-seven-93zacy8oyr.vercel.app
+
+Repositorio: https://github.com/ThomasUGonzalez/portfolio
+
 ## Correrlo en tu computadora
 
 Necesitás Node.js 20 o superior.
@@ -113,4 +117,4 @@ Experiencia, educación y skills funcionan igual: agregá un elemento a la lista
 2. "Add New… → Project" y elegí el repositorio.
 3. Dejá todo como viene (detecta Next.js) y tocá "Deploy".
 
-Cada `git push` vuelve a desplegar. La URL del sitio se usa sola para el sitemap y la imagen al compartir; si después usás un dominio propio, agregá en Vercel la variable de entorno `NEXT_PUBLIC_SITE_URL` (por ejemplo `https://midominio.com`).
+Cada `git push` a `main` vuelve a desplegar el sitio (el archivo `vercel.json` desactiva las "URLs limpias" para que la página interactiva de Nissi, que es un `.html`, se sirva bien). La URL del sitio se usa sola para el sitemap y la imagen al compartir; si después usás un dominio propio, agregá en Vercel la variable de entorno `NEXT_PUBLIC_SITE_URL` (por ejemplo `https://midominio.com`).
