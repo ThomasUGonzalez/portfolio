@@ -2,7 +2,7 @@
 
 Sitio estático (Next.js + TypeScript + Tailwind) que se arma solo a partir de los JSON de `content/`.
 
-**Sitio publicado:** https://portfolio-tan-seven-93zacy8oyr.vercel.app
+**Sitio publicado:** https://thomasugonzalez.vercel.app
 
 Repositorio: https://github.com/ThomasUGonzalez/portfolio
 
