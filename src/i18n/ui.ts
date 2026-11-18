@@ -40,7 +40,13 @@ const es = {
     demo: "Ver demo",
     otros: "Otros proyectos",
   },
-  video: { play: "Reproducir video", pause: "Pausar video", de: "Video:" },
+  video: {
+    play: "Reproducir video",
+    pause: "Pausar video",
+    de: "Video:",
+    fullscreen: "Ver en pantalla completa",
+    exitFullscreen: "Salir de pantalla completa",
+  },
   sobreMi: { titulo: "Sobre mí", ubicacion: "Dónde estoy", idiomas: "Idiomas" },
   trayectoria: {
     titulo: "Experiencia y educación",
@@ -101,7 +107,13 @@ const en: typeof es = {
     demo: "View demo",
     otros: "Other projects",
   },
-  video: { play: "Play video", pause: "Pause video", de: "Video:" },
+  video: {
+    play: "Play video",
+    pause: "Pause video",
+    de: "Video:",
+    fullscreen: "View full screen",
+    exitFullscreen: "Exit full screen",
+  },
   sobreMi: { titulo: "About me", ubicacion: "Where I am", idiomas: "Languages" },
   trayectoria: {
     titulo: "Experience and education",

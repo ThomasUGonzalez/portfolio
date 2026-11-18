@@ -15,7 +15,14 @@ export function ClipTabs({
   clips: Clip[];
   logo: string;
   color: string;
-  labels: { tabs: string; play: string; pause: string; video: string };
+  labels: {
+    tabs: string;
+    play: string;
+    pause: string;
+    video: string;
+    fullscreen: string;
+    exitFullscreen: string;
+  };
 }) {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -68,6 +75,8 @@ export function ClipTabs({
           label={`${labels.video} ${clip.titulo}`}
           playLabel={labels.play}
           pauseLabel={labels.pause}
+          fullscreenLabel={labels.fullscreen}
+          exitFullscreenLabel={labels.exitFullscreen}
         />
       </div>
     </div>

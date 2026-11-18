@@ -54,7 +54,12 @@ export default async function ProjectPage({ params }: Props) {
   const d = ui.detalle;
   const titulo = project.titulo[lang];
   const { videoMedia: video, repo } = project;
-  const videoLabels = { play: ui.video.play, pause: ui.video.pause };
+  const videoLabels = {
+    play: ui.video.play,
+    pause: ui.video.pause,
+    fullscreen: ui.video.fullscreen,
+    exitFullscreen: ui.video.exitFullscreen,
+  };
 
   const mainVideo = (
     <VideoPlayer
@@ -66,6 +71,8 @@ export default async function ProjectPage({ params }: Props) {
       label={`${ui.video.de} ${titulo}`}
       playLabel={videoLabels.play}
       pauseLabel={videoLabels.pause}
+      fullscreenLabel={videoLabels.fullscreen}
+      exitFullscreenLabel={videoLabels.exitFullscreen}
     />
   );
 
