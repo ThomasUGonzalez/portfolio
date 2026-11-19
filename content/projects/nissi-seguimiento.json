@@ -1,0 +1,54 @@
+{
+  "id": "nissi-seguimiento",
+  "orden": 4,
+  "destacado": true,
+  "titulo": { "es": "Nissi: app de seguimiento de presupuestos y trabajos", "en": "Nissi: quote and job tracking app" },
+  "resumen": {
+    "es": "App para el celular del dueño de una mueblería: qué hacer hoy, trabajos atrasados y a quién volver a escribir.",
+    "en": "A phone app for a furniture shop owner: what to do today, late jobs and who to follow up with."
+  },
+  "problema": {
+    "es": "El dueño perdía el seguimiento: a veces dejaba pasar un trabajo grande por atender varios chicos, y la postventa quedaba sin hacer.",
+    "en": "The owner lost track of follow-ups: a big job sometimes slipped while handling several small ones, and after-sales contact was left undone."
+  },
+  "rol": {
+    "es": "La desarrollé con asistencia de IA como herramienta de trabajo.",
+    "en": "I built it using AI assistance as a development tool."
+  },
+  "queHice": {
+    "es": [
+      "Pantalla «Hoy» con lo pendiente: presupuestos para seguir, trabajos atrasados y avisos de postventa.",
+      "Recorrido de cada trabajo: presupuesto, en taller, listo, colocado o no compró (con el motivo).",
+      "Avisos para volver a escribir por WhatsApp, con días configurables y pedido de reseña en Google.",
+      "Instalable en el celular: app web (PWA) y APK para Android."
+    ],
+    "en": [
+      "A “Today” screen with what is pending: quotes to follow up, late jobs and after-sales reminders.",
+      "Each job's path: quote, in workshop, ready, installed or lost (with the reason).",
+      "Reminders to follow up on WhatsApp, with configurable days and a Google review request.",
+      "Installable on the phone: web app (PWA) and an Android APK."
+    ]
+  },
+  "decision": {
+    "es": "La hice como app en el celular y no como planilla, porque el dueño trabaja desde el teléfono y una planilla le resultaba lenta.",
+    "en": "I built it as a phone app instead of a spreadsheet, because the owner works from his phone and a spreadsheet felt slow to him."
+  },
+  "stack": ["Next.js", "PWA", "Android (WebView)", "Vercel"],
+  "estado": { "es": "Publicada y funcionando", "en": "Live and working" },
+  "aclaracion": {
+    "es": "Los clientes y montos del video son datos de prueba.",
+    "en": "The clients and amounts in the video are test data."
+  },
+  "logo": "/logos/nissi.png",
+  "portada": "/logos/nissi.png",
+  "colorMarca": "#20d4e8",
+  "video": "nissi-app-recorrido.mp4",
+  "clips": [
+    { "archivo": "nissi-app-1.mp4", "titulo": { "es": "Cargar un presupuesto", "en": "Adding a quote" } },
+    { "archivo": "nissi-app-2.mp4", "titulo": { "es": "Del presupuesto a la colocación", "en": "From quote to installation" } },
+    { "archivo": "nissi-app-3.mp4", "titulo": { "es": "Trabajos grandes y perdidos", "en": "Big and lost jobs" } },
+    { "archivo": "nissi-app-4.mp4", "titulo": { "es": "Qué hacer hoy", "en": "What to do today" } }
+  ],
+  "repo": { "tipo": "privado", "url": null, "texto": { "es": "Código disponible a pedido", "en": "Code available on request" } },
+  "demo": null
+}
